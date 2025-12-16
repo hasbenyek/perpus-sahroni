@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h4>📝 Daftar Akun Baru</h4>
+            </div>
+            <div class="card-body p-4">
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Username Baru</label>
+                        <input type="text" name="username" class="form-control" placeholder="Pilih username unik" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Buat password rahasia" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg">Daftar Sekarang</button>
+                    </div>
+                </form>
+
+            </div>
+            <div class="card-footer text-center">
+                Sudah punya akun? <a href="{{ url_for('login') }}">Login disini</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

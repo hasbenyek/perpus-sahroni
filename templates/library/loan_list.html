@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">📋 Data Peminjaman</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Peminjam</th>
+                    <th>Judul Buku</th>
+                    <th>Tgl Pinjam</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <td>{{ loan.borrower_name }}</td>
+                    <td>{{ loan.book.title }}</td>
+                    <td>{{ loan.loan_date }}</td>
+                    <td>
+                        {% if loan.return_date %}
+                            <span class="badge bg-secondary">Dikembalikan</span>
+                            <br><small>{{ loan.return_date }}</small>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Sedang Pinjam</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not loan.return_date %}
+                            <a href="{{ url_for('return_book', loan_id=loan.id) }}" class="btn btn-sm btn-primary">Kembalikan</a>
+                        {% else %}
+                            <button class="btn btn-sm btn-light" disabled>Selesai</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">Belum ada data peminjaman.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

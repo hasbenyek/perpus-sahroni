@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Tambah Buku Baru</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Judul Buku</label>
+                        <input type="text" class="form-control" id="title" name="title" required placeholder="Contoh: Belajar Python">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Pengarang</label>
+                        <input type="text" class="form-control" id="author" name="author" required placeholder="Contoh: Guido van Rossum">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="stock" class="form-label">Jumlah Stok</label>
+                        <input type="number" class="form-control" id="stock" name="stock" min="1" value="1" required>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Simpan Buku</button>
+                        <a href="{{ url_for('book_list') }}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

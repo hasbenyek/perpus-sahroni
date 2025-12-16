@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Form Peminjaman Buku</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-3 text-muted">Buku yang akan dipinjam:</h6>
+                <h3>📖 {{ book.title }}</h3>
+                <hr>
+                
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="borrower_name" class="form-label">Nama Peminjam</label>
+                        <input type="text" class="form-control" id="borrower_name" name="borrower_name" required placeholder="Contoh: Budi Santoso">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Konfirmasi Peminjaman</button>
+                        <a href="{{ url_for('book_list') }}" class="btn btn-secondary">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

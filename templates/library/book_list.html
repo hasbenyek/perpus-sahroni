@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>📚 Daftar Koleksi Buku</h2>
+    <a href="{{ url_for('add_book') }}" class="btn btn-primary">+ Tambah Buku</a>
+</div>
+
+<div class="card mb-4 bg-light">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('book_list') }}" class="row g-2 align-items-center">
+            <div class="col">
+                <input type="text" name="q" class="form-control" placeholder="Cari judul buku atau nama pengarang..." value="{{ search_query if search_query else '' }}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-dark">🔍 Cari</button>
+            </div>
+        </form>
+
+        {% if search_query %}
+            <div class="mt-2">
+                <small class="text-muted">Menampilkan hasil pencarian untuk: <strong>"{{ search_query }}"</strong></small>
+                <a href="{{ url_for('book_list') }}" class="text-danger text-decoration-none ms-2">
+                    &times; Reset Pencarian
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Judul Buku</th>
+                        <th>Pengarang</th>
+                        <th>Stok</th>
+                        <th>Tanggal Masuk</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td><strong>{{ book.title }}</strong></td>
+                        <td>{{ book.author }}</td>
+                        <td>
+                            {% if book.stock > 0 %}
+                                <span class="badge bg-success">{{ book.stock }} pcs</span>
+                            {% else %}
+                                <span class="badge bg-danger">Habis</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ book.created_at.strftime('%d-%m-%Y') }}</td>
+                        
+                        <td>
+                            
+                            {% if book.stock > 0 %}
+                                <a href="{{ url_for('borrow_book', book_id=book.id) }}" class="btn btn-sm btn-success">Pinjam</a>
+                            {% else %}
+                                <button class="btn btn-sm btn-secondary" disabled>Habis</button>
+                            {% endif %}
+
+                            <a href="#" class="btn btn-sm btn-info text-white">Edit</a>
+                            <a href="#" class="btn btn-sm btn-danger">Hapus</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">
+                            {% if search_query %}
+                                Tidak ada buku yang cocok dengan kata kunci "<strong>{{ search_query }}</strong>".
+                            {% else %}
+                                Belum ada data buku. Silakan tambah baru.
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
